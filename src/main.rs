@@ -22,8 +22,20 @@ fn main() {
       SocketAddr::from(([127, 0, 0, 1], 3001)),
   ];
   let listener = TcpListener::bind(&addrs[..]).unwrap();
+  /*
   match listener.accept() {
       Ok((_socket, addr)) => println!("new client: {:?}", addr),
       Err(e) => println!("couldn't get client: {:?}", e),
+  }
+  */
+  for stream in listener.incoming() {
+    match stream {
+        Ok(stream) => {
+            println!("new client!");
+        }
+        Err(e) => { /* connection failed */
+          println!("Connection failed error: {}", e);
+        }
+    }
   }
 }
